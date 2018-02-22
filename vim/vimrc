@@ -1,0 +1,83 @@
+function! PathogenSetup ()
+    execute pathogen#infect()
+endfunction
+
+function! EditorAppearance()
+    syntax on
+    set laststatus=2
+    set number
+    set showtabline=2
+    set t_Co=256
+    colorscheme eyecandy
+    set cursorline
+    set fillchars=" split char
+    set encoding=utf-8
+
+    " let terminal resize scale the internal windows
+    autocmd VimResized * :wincmd =
+endfunction
+
+function! DefaultCodingStyle()
+    set tabstop=4
+    set shiftwidth=4
+    set softtabstop=4
+    set expandtab " expand tabs as spaces
+
+    autocmd FileType cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType java setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
+    " highlight when code is over 81 columns
+    augroup vimrc_autocmds
+        autocmd BufEnter * highlight OverLength ctermbg=darkgrey
+        autocmd BufEnter * match OverLength /\%81v.*/
+    augroup END
+endfunction
+
+function! NerdTree()
+    nnoremap <C-n> :NERDTreeToggle<CR>
+    " let g:NERDTreeDirArrows=0
+    let g:NERDTreeWinSize=30 " set NerdTree size
+    let g:NERDTreeWinPos='left'
+
+    " if NerdTree is last thing open in vim, close vim completely
+    autocmd bufenter * if (
+            \ winnr("$") == 1
+            \ && exists("b:NERDTreeType")
+            \ && b:NERDTreeType == "primary")
+            \ | q |
+    \ endif
+
+    " switch off dir arrows
+    " let g:NERDTreeDirArrows=0
+endfunction
+
+function! PythonMode()
+    let g:pymode_lint=1
+    let g:pymode_folding=0
+    let g:pymode_doc=0
+    let g:pymode_lint_on_fly=0
+    let g:pymode_rope_completion=0
+    let g:pymode_options_colorcolumn=0
+
+    " shortcut key to bring up corresponding unit test
+    " map <S-t> :vsplit %:s?:h?test?:r_test.py<CR>
+endfunction
+
+function! MarkDownMode()
+    let g:vim_markdown_folding_disabled = 1
+    let g:vim_markdown_override_foldtext = 0
+    let g:vim_markdown_emphasis_multiline = 0
+    let g:vim_markdown_conceal = 0
+    let g:tex_conceal = ""
+    let g:vim_markdown_math = 1
+endfunction
+
+call PathogenSetup()
+call EditorAppearance()
+call DefaultCodingStyle()
+call NerdTree()
+call PythonMode()
+call MarkDownMode()
+
