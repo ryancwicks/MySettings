@@ -36,7 +36,7 @@ function! DefaultCodingStyle()
 endfunction
 
 function! NerdTree()
-    nnoremap <C-n> :NERDTreeToggle<CR>
+    map <C-n> :NERDTreeToggle<CR>
     " let g:NERDTreeDirArrows=0
     let g:NERDTreeWinSize=30 " set NerdTree size
     let g:NERDTreeWinPos='left'
@@ -74,10 +74,24 @@ function! MarkDownMode()
     let g:vim_markdown_math = 1
 endfunction
 
+function! KeyBindings ()
+    imap jk <Esc>
+endfunction
+
+function! SwitchHeaders()
+    map <F5> :call CurtineIncSw()<CR>
+endfunction
+
+function! ClangFormat()
+    let g:clang_format#code_style = "llvm"
+endfunction
+
 call PathogenSetup()
+call KeyBindings()
 call EditorAppearance()
 call DefaultCodingStyle()
 call NerdTree()
 call PythonMode()
 call MarkDownMode()
-
+call SwitchHeaders()
+call ClangFormat()
